@@ -1,5 +1,5 @@
 from game import Game
-
+from globals import estado
 while True:
-    Game()
+    Game(estado)
     break

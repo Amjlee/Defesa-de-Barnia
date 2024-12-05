@@ -8,3 +8,4 @@ janela.set_title("Tombshifter")
 background = GameImage("templates/background.png")
 teclado = Keyboard()
 mouse = Mouse()
+estado = "Menu"
