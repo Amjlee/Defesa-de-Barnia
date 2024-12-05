@@ -1,7 +1,6 @@
-# game.py
+from globals import *
 from scenes.menu import Menu
 from scenes.play import Play
-from globals import *
 
 def Game(estado):
     while True:
