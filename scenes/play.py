@@ -2,25 +2,34 @@ from globals import *
 from PPlay.gameimage import GameImage
 
 def Play():
+    player = player_direita
     # Configurações iniciais do player
     player.set_position(janela.width / 2 - player.width / 2, janela.height / 2 - player.height / 2)
-
+    player.set_total_duration(500)
     while True:
         # Movimento do player
-        if teclado.key_pressed("W") and ((player.y>limite_arena_vertical["superior"]\
-                and (player.x>180 and player.x<janela.width-player.width-180)) or(player.y>limite_arena_vertical["superior"]+120 and \
-                                            (player.x<180 or player.x>janela.width-180))):
+        if teclado.key_pressed("W") and limites_W(player):
             player.y -= velocidade
-        if teclado.key_pressed("S") and ((player.y<limite_arena_vertical["inferior"]-120 and (player.x<180 or player.x>janela.width-180)) \
-            or (player.y<limite_arena_vertical["inferior"]\
-                and (player.x>180 and player.x<janela.width-180))):
+            player.update()
+        if teclado.key_pressed("S") and limites_S(player):
             player.y += velocidade
-        if teclado.key_pressed("A") and (((player.y<=janela.height-player.height-175 and player.y>=175) and (player.x>limite_arena_horizontal["esquerdo"])) or \
-                                         ((player.y<175 or player.y>janela.height-player.height-175) and player.x>limite_arena_horizontal["esquerdo"]+130)):
+            player.update()
+        if teclado.key_pressed("A") and limites_A(player):
             player.x -= velocidade
-        if teclado.key_pressed("D") and (((player.y<=janela.height-player.height-175 and player.y>=175) and (player.x<limite_arena_horizontal["direito"])) or \
-                                         ((player.y<175 or player.y>janela.height-player.height-175) and player.x<limite_arena_horizontal["direito"]-130)):
+            x = player.x
+            y = player.y
+            player = player_direita
+            player.set_total_duration(500)
+            player.set_position(x, y)
+            player.update()
+        if teclado.key_pressed("D") and limites_D(player):
             player.x += velocidade
+            x = player.x
+            y = player.y
+            player = player_esquerda
+            player.set_total_duration(500)
+            player.set_position(x, y)
+            player.update()
 
         # Condição para voltar ao menu
         if teclado.key_pressed("ESC"):
