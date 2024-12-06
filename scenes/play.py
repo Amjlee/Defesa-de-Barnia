@@ -7,13 +7,19 @@ def Play():
 
     while True:
         # Movimento do player
-        if teclado.key_pressed("W") and player.y>limite_arena_vertical["superior"]:
+        if teclado.key_pressed("W") and ((player.y>limite_arena_vertical["superior"]\
+                and (player.x>180 and player.x<janela.width-player.width-180)) or(player.y>limite_arena_vertical["superior"]+120 and \
+                                            (player.x<180 or player.x>janela.width-180))):
             player.y -= velocidade
-        if teclado.key_pressed("S") and player.y<limite_arena_vertical["inferior"]:
+        if teclado.key_pressed("S") and ((player.y<limite_arena_vertical["inferior"]-120 and (player.x<180 or player.x>janela.width-180)) \
+            or (player.y<limite_arena_vertical["inferior"]\
+                and (player.x>180 and player.x<janela.width-180))):
             player.y += velocidade
-        if teclado.key_pressed("A") and player.x>limite_arena_horizontal["esquerdo"]:
+        if teclado.key_pressed("A") and (((player.y<=janela.height-player.height-175 and player.y>=175) and (player.x>limite_arena_horizontal["esquerdo"])) or \
+                                         ((player.y<175 or player.y>janela.height-player.height-175) and player.x>limite_arena_horizontal["esquerdo"]+130)):
             player.x -= velocidade
-        if teclado.key_pressed("D") and player.x<limite_arena_horizontal["direito"]:
+        if teclado.key_pressed("D") and (((player.y<=janela.height-player.height-175 and player.y>=175) and (player.x<limite_arena_horizontal["direito"])) or \
+                                         ((player.y<175 or player.y>janela.height-player.height-175) and player.x<limite_arena_horizontal["direito"]-130)):
             player.x += velocidade
 
         # Condição para voltar ao menu
