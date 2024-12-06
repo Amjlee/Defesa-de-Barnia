@@ -7,13 +7,13 @@ def Play():
 
     while True:
         # Movimento do player
-        if teclado.key_pressed("W"):
+        if teclado.key_pressed("W") and player.y>limite_arena_vertical["superior"]:
             player.y -= velocidade
-        if teclado.key_pressed("S"):
+        if teclado.key_pressed("S") and player.y<limite_arena_vertical["inferior"]:
             player.y += velocidade
-        if teclado.key_pressed("A"):
+        if teclado.key_pressed("A") and player.x>limite_arena_horizontal["esquerdo"]:
             player.x -= velocidade
-        if teclado.key_pressed("D"):
+        if teclado.key_pressed("D") and player.x<limite_arena_horizontal["direito"]:
             player.x += velocidade
 
         # Condição para voltar ao menu

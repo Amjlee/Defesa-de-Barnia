@@ -15,3 +15,7 @@ player = GameImage("templates/player.png")
 teclado = Keyboard()
 mouse = Mouse()
 estado = "Menu"
+
+limite_arena_horizontal = {"esquerdo": 50, "direito": janela.width-player.width-60}
+limite_arena_vertical = {"inferior": janela.height-player.height-60,\
+                        "superior": 60}
