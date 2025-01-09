@@ -12,8 +12,8 @@ velocidade = 0.2
 background = GameImage("templates/background.png")
 
 arena = GameImage("templates/arena.png")
-player_direita = Sprite("templates/cavemia_direita.png", 4)
-player_esquerda = Sprite("templates/cavemia_esquerda.png", 4)
+player_direita = Sprite("templates/cavemia_esquerda.png", 4)
+player_esquerda = Sprite("templates/cavemia_direita.png", 4)
 player_frente = Sprite("templates/cavemia_frente.png", 4)
 player_tras = Sprite("templates/cavemia_tras.png", 4)
 teclado = Keyboard()
