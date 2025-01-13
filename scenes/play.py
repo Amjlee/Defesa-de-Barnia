@@ -1,45 +1,22 @@
 from globals import *
 from PPlay.gameimage import GameImage
+from player import Player
 
 def Play():
-    player = player_direita
-    # Configurações iniciais do player
-    player.set_position(janela.width / 2 - player.width / 2, janela.height / 2 - player.height / 2)
-    player.set_total_duration(500)
+    player = Player(janela.width / 2, janela.height / 2)
+
     while True:
+        delta_time = janela.delta_time()
+
         # Movimento do player
-        if teclado.key_pressed("W") and limites_W(player):
-            player.y -= velocidade
-            x = player.x
-            y = player.y
-            player = player_tras
-            player.set_total_duration(500)
-            player.set_position(x, y)
-            player.update()
-        if teclado.key_pressed("S") and limites_S(player):
-            player.y += velocidade
-            x = player.x
-            y = player.y
-            player = player_frente
-            player.set_total_duration(500)
-            player.set_position(x, y)
-            player.update()
-        if teclado.key_pressed("A") and limites_A(player):
-            player.x -= velocidade
-            x = player.x
-            y = player.y
-            player = player_direita
-            player.set_total_duration(500)
-            player.set_position(x, y)
-            player.update()
-        if teclado.key_pressed("D") and limites_D(player):
-            player.x += velocidade
-            x = player.x
-            y = player.y
-            player = player_esquerda
-            player.set_total_duration(500)
-            player.set_position(x, y)
-            player.update()
+        if teclado.key_pressed("W"):
+            player.move("W", limites_W, limites_S, limites_A, limites_D, delta_time)
+        if teclado.key_pressed("S"):
+            player.move("S", limites_W, limites_S, limites_A, limites_D, delta_time)
+        if teclado.key_pressed("A"):
+            player.move("A", limites_W, limites_S, limites_A, limites_D, delta_time)
+        if teclado.key_pressed("D"):
+            player.move("D", limites_W, limites_S, limites_A, limites_D, delta_time)
 
         # Condição para voltar ao menu
         if teclado.key_pressed("ESC"):
