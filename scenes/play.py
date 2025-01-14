@@ -1,18 +1,27 @@
 from globals import *
-from PPlay.gameimage import GameImage
+from PPlay.sprite import Sprite
 from Personagens.player import Player
 from Personagens.fantasgua import Fantasgua
 
 import random
 
-
+def create_enemies(level):
+    enemies = []
+    for _ in range(level):
+        x = random.randint(0, janela.width)
+        y = random.randint(0, janela.height)
+        enemies.append(Fantasgua(x, y))
+    return enemies
 
 def Play():
     player = Player(janela.width / 2, janela.height / 2)
-    fantasgua = Fantasgua(janela.width / 4, janela.height / 4)  # Cria o Fantasgua
+    level = 1
+    enemies = []
+    porta = False
+    porta_sprite = Sprite("templates/porta.png")
+    porta_sprite.set_position((janela.width / 2) - 60, (janela.height / 5) * 1)  # Define a posição inicial da porta
 
     last_key = ""  # Variável para guardar a última tecla pressionada
-    level = 1
     
     while True:
         delta_time = janela.delta_time()
@@ -34,8 +43,13 @@ def Play():
             player.move("D", limites_W, limites_S, limites_A, limites_D, delta_time)
             last_key = "D"
 
-        # Movimento do Fantasgua
-        fantasgua.follow_player(player, delta_time)
+        # Verifica se não há inimigos
+        if len(enemies) == 0:
+            porta = True
+
+        # Movimento dos inimigos
+        for enemy in enemies:
+            enemy.follow_player(player, delta_time)
 
         # Condição para voltar ao menu
         if teclado.key_pressed("ESC"):
@@ -44,5 +58,11 @@ def Play():
         # Desenho na tela
         arena.draw()
         player.draw()
-        fantasgua.draw()
+        for enemy in enemies:
+            enemy.draw()
+        
+        # Renderiza a porta se porta == True
+        if porta:
+            porta_sprite.draw()
+
         janela.update()

@@ -3,6 +3,8 @@ from PPlay.gameimage import GameImage
 from PPlay.sprite import *
 from PPlay.keyboard import Keyboard
 from PPlay.mouse import Mouse
+from Personagens import pingoso
+from Personagens import fantasgua
 
 janela = Window(900, 600)
 janela.set_title("Tombshifter")
@@ -54,6 +56,10 @@ def limites_W(player: Sprite):
     return ((player.y>limite_arena_vertical["superior"]\
                 and (player.x>180 and player.x<janela.width-player.width-180)) or(player.y>limite_arena_vertical["superior"]+120 and \
                                             (player.x<180 or player.x>janela.width-180)));
+
+
+def create_fantasgua():
+    fantasgua.Fantasgua(janela.width / 4, janela.height / 4)
 
 
 def quantidade_inimigos(level):
