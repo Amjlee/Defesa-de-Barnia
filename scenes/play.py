@@ -18,8 +18,6 @@ def Play():
         if teclado.key_pressed("D"):
             player.move("D", limites_W, limites_S, limites_A, limites_D, delta_time)
 
-
-
         # Condição para voltar ao menu
         if teclado.key_pressed("ESC"):
             return "Menu"  # Retorna ao menu
