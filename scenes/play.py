@@ -7,6 +7,8 @@ import random
 
 def create_enemies(level):
     enemies = []
+    if level == 1:
+        return 0
     for _ in range(level):
         x = random.randint(0, janela.width)
         y = random.randint(0, janela.height)
@@ -14,7 +16,6 @@ def create_enemies(level):
     return enemies
 
 def Play():
-    x = 0   
     player = Player((janela.width / 2) - 60, (janela.height / 5)+60)
     level = 1
     enemies = []
@@ -22,7 +23,7 @@ def Play():
     porta_sprite = Sprite("templates/porta.png")
     porta_sprite.set_position((janela.width / 2) - 60, (janela.height / 5) * 1)  # Define a posição inicial da porta
 
-    last_key = ""  # Variável para guardar a última tecla pressionada
+    last_key = ""  # Variável para guardar a última tecla pressionada / Auxiliará no ataque
     
     while True:
         delta_time = janela.delta_time()
@@ -44,9 +45,7 @@ def Play():
             player.move("D", limites_W, limites_S, limites_A, limites_D, delta_time)
             last_key = "D"
 
-        if player.colide_porta(porta_sprite):
-            print(f'x:{player.current_sprite.x} y:{player.current_sprite.y}')
-            x+=1
+
         # Verifica se não há inimigos
         if len(enemies) == 0:
             porta = True
@@ -58,6 +57,14 @@ def Play():
         # Condição para voltar ao menu
         if teclado.key_pressed("ESC"):
             return "Menu"  # Retorna ao menu
+        
+        # Passar de Fase
+        if player.colide_porta(porta_sprite):
+            level += 1
+            player.current_sprite.x = (janela.width / 2) - (player.current_sprite.width / 2)
+            player.current_sprite.y = (janela.height / 2) - (player.current_sprite.height / 2)
+            print("colide")
+            print(level)
 
         # Desenho na tela
         arena.draw()
