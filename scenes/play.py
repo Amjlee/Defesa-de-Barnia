@@ -5,19 +5,9 @@ from Personagens.fantasgua import Fantasgua
 
 import random
 
-def create_enemies(level):
-    enemies = []
-    if level == 1:
-        return 0
-    for _ in range(level):
-        x = random.randint(0, janela.width)
-        y = random.randint(0, janela.height)
-        enemies.append(Fantasgua(x, y))
-    return enemies
-
 def Play():
     player = Player((janela.width / 2) - 60, (janela.height / 5)+60)
-    level = 1
+    level = 0
     enemies = []
     porta = False
     porta_sprite = Sprite("templates/porta.png")

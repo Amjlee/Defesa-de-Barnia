@@ -5,7 +5,8 @@ from PPlay.keyboard import Keyboard
 from PPlay.mouse import Mouse
 from Personagens import pingoso
 from Personagens import fantasgua
-import os
+import random
+
 janela = Window(900, 600)
 janela.set_title("Tombshifter")
 
@@ -88,3 +89,14 @@ def quantidade_inimigos(level):
     if level == 10:
         return 4
     
+
+def create_enemies(level):
+    enemies = []
+    qtdd_fantasgua = 0
+    qtdd_pingoso = 0
+
+    qtdd_fantasgua = random.randint(0, quantidade_inimigos(level))
+    qtdd_pingoso = qtdd_fantasgua - quantidade_inimigos(level)
+
+    for i in range (qtdd_fantasgua):
+        enemies.append()
