@@ -11,7 +11,7 @@ janela.set_title("Tombshifter")
 
 velocidade = 0.2
 
-background = GameImage("templates/Arenas/arena_1.png")
+background = GameImage("templates/background.png")
 
 arena = GameImage("templates/Arenas/arena_2.png")
 player_direita = Sprite("templates/Player/cavemia_esquerda.png", 4)
