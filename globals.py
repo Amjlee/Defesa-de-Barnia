@@ -22,40 +22,34 @@ teclado = Keyboard()
 mouse = Mouse()
 estado = "Menu"
 
-def limites_A(player: Sprite):
+def limites_W(player: Sprite):
     global janela
-    limite_arena_horizontal = {"esquerdo": 60, "direito": janela.width-player.width-60}
     limite_arena_vertical = {"inferior": janela.height-player.height-60,\
-                            "superior": 60}
-    return (((player.y<=janela.height-player.height-175 and player.y>=175) and (player.x>limite_arena_horizontal["esquerdo"])) or \
-                                         ((player.y<175 or player.y>janela.height-player.height-175)\
-                                           and player.x>limite_arena_horizontal["esquerdo"]+130))
+                            "superior": 120}
+    return ((player.y>limite_arena_vertical["superior"]\
+            and (120<player.x<janela.width-player.width-120)) or (player.y>limite_arena_vertical["superior"]+120 and \
+            (player.x<=120 or player.x>=janela.width-player.width-120)));
 
 def limites_S(player: Sprite):
     global janela
-    limite_arena_horizontal = {"esquerdo": 60, "direito": janela.width-player.width-60}
-    limite_arena_vertical = {"inferior": janela.height-player.height-60,\
-                            "superior": 60}
-    return ((player.y<limite_arena_vertical["inferior"]-120 and (player.x<180 or player.x>janela.width-180)) \
+    limite_arena_vertical = {"inferior": janela.height-player.height-60,"superior": 120}
+    return ((player.y<limite_arena_vertical["inferior"]-120 and (player.x<135 or player.x>janela.width-player.width-135)) \
             or (player.y<limite_arena_vertical["inferior"]\
-                and (player.x>180 and player.x<janela.width-180)))
-    
+            and (135<=player.x<=janela.width-player.width-135)))
+
+def limites_A(player: Sprite):
+    global janela
+    limite_arena_horizontal = {"esquerdo": -10, "direito": janela.width-player.width-60}
+    return (((238<player.y<janela.height-player.height-175) and (player.x>limite_arena_horizontal["esquerdo"])) or \
+            ((player.y<=238 or player.y>=janela.height-player.height-175)\
+            and player.x>limite_arena_horizontal["esquerdo"]+150))
+  
 def limites_D(player: Sprite):
     global janela
-    limite_arena_horizontal = {"esquerdo": 60, "direito": janela.width-player.width-60}
-    limite_arena_vertical = {"inferior": janela.height-player.height-60,\
-                            "superior": 60}
-    return (((player.y<=janela.height-player.height-175 and player.y>=175) and (player.x<limite_arena_horizontal["direito"]+40)) or \
-                                         ((player.y<175 or player.y>janela.height-player.height-175) and player.x<limite_arena_horizontal["direito"]-90))
-    
-def limites_W(player: Sprite):
-    global janela
-    limite_arena_horizontal = {"esquerdo": 60, "direito": janela.width-player.width-60}
-    limite_arena_vertical = {"inferior": janela.height-player.height-60,\
-                            "superior": 60}
-    return ((player.y>limite_arena_vertical["superior"]\
-                and (player.x>180 and player.x<janela.width-player.width-180)) or(player.y>limite_arena_vertical["superior"]+120 and \
-                                            (player.x<180 or player.x>janela.width-180)));
+    limite_arena_horizontal = {"esquerdo": -10, "direito": janela.width-player.width-10}
+    return (((240<=player.y<=janela.height-player.height-175) and (player.x<limite_arena_horizontal["direito"])) or \
+            ((player.y<240 or player.y>janela.height-player.height-175) and \
+            player.x<limite_arena_horizontal["direito"]-150))
 
 
 def create_fantasgua():

@@ -14,7 +14,7 @@ def create_enemies(level):
     return enemies
 
 def Play():
-    player = Player(janela.width / 2, janela.height / 2)
+    player = Player((janela.width / 2) - 60, (janela.height / 5)+60)
     level = 1
     enemies = []
     porta = False
