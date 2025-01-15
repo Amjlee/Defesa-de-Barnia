@@ -51,3 +51,9 @@ class Player:
     def draw(self):
         # Desenha o sprite atual na tela
         self.current_sprite.draw()
+
+    def colide_porta(self, porta: Sprite):
+        area_porta = [porta.x - porta.width/2 - 10, porta.y - porta.height/2 - 10, \
+                    porta.x+porta.width/2, porta.y + porta.height/2]
+        return (area_porta[0] <= self.current_sprite.x <= area_porta[2] and \
+            area_porta[1] <= self.current_sprite.y <= area_porta[3])

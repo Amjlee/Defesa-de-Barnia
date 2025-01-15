@@ -14,6 +14,7 @@ def create_enemies(level):
     return enemies
 
 def Play():
+    x = 0   
     player = Player((janela.width / 2) - 60, (janela.height / 5)+60)
     level = 1
     enemies = []
@@ -43,6 +44,9 @@ def Play():
             player.move("D", limites_W, limites_S, limites_A, limites_D, delta_time)
             last_key = "D"
 
+        if player.colide_porta(porta_sprite):
+            print(f'x:{player.current_sprite.x} y:{player.current_sprite.y}')
+            x+=1
         # Verifica se não há inimigos
         if len(enemies) == 0:
             porta = True

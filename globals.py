@@ -5,13 +5,13 @@ from PPlay.keyboard import Keyboard
 from PPlay.mouse import Mouse
 from Personagens import pingoso
 from Personagens import fantasgua
-
+import os
 janela = Window(900, 600)
 janela.set_title("Tombshifter")
 
 velocidade = 0.2
 
-background = GameImage("templates/background.png")
+background = GameImage("templates/Arenas/arena_1.png")
 
 arena = GameImage("templates/Arenas/arena_2.png")
 player_direita = Sprite("templates/Player/cavemia_esquerda.png", 4)
@@ -50,6 +50,7 @@ def limites_D(player: Sprite):
     return (((240<=player.y<=janela.height-player.height-175) and (player.x<limite_arena_horizontal["direito"])) or \
             ((player.y<240 or player.y>janela.height-player.height-175) and \
             player.x<limite_arena_horizontal["direito"]-150))
+
 
 
 def create_fantasgua():
