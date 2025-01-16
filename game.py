@@ -9,7 +9,8 @@ def Game(estado):
 
         if estado == "Play":
             estado = Play()  # Atualiza o estado com o retorno de Play
+            musica.stop()
 
-        if teclado.key_pressed("ESC"):
-            janela.close()
-            break
+        # if teclado_game.key_pressed("ESC"):
+        #     janela.close()
+        #     break

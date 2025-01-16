@@ -3,6 +3,7 @@ from PPlay.gameimage import GameImage
 from PPlay.sprite import *
 from PPlay.keyboard import Keyboard
 from PPlay.mouse import Mouse
+from PPlay.sound import Sound
 from Personagens import pingoso
 from Personagens import fantasgua
 import random
@@ -13,6 +14,8 @@ janela.set_title("Tombshifter")
 velocidade = 0.2
 
 background = GameImage("templates/background.png")
+
+musica = Sound("Eric Skiff - A Night Of Dizzy Spells.ogg")
 
 arena = GameImage("templates/Arenas/arena_2.png")
 player_direita = Sprite("templates/Player/cavemia_esquerda.png", 4)
