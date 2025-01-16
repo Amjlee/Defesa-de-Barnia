@@ -2,13 +2,14 @@ from globals import *
 from PPlay.sprite import Sprite
 from Personagens.player import Player
 from Personagens.fantasgua import Fantasgua
+from Personagens.pingoso import Pingoso
 
 import random
 
 def Play():
     player = Player((janela.width / 2) - 60, (janela.height / 5)+60)
     level = 0
-    enemies = []
+    enemies = [Pingoso((janela.width/2), (janela.height/3))]
     porta = False
     porta_sprite = Sprite("templates/porta.png")
     porta_sprite.set_position((janela.width / 2) - 60, (janela.height / 5) * 1)  # Define a posição inicial da porta
@@ -49,7 +50,7 @@ def Play():
             return "Menu"  # Retorna ao menu
         
         # Passar de Fase
-        if player.colide_porta(porta_sprite):
+        if player.colide_porta(porta_sprite) and porta:
             level += 1
             player.current_sprite.x = (janela.width / 2) - (player.current_sprite.width / 2)
             player.current_sprite.y = (janela.height / 2) - (player.current_sprite.height / 2)
