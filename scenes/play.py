@@ -28,13 +28,14 @@ def create_enemies(level):
 def Play():
     player = Player((janela.width / 2) - 60, (janela.height / 2) + 60)  # Ajusta a posição inicial do player
     level = 1
-    enemies = []  # Começa sem inimigos no nível 1
-    porta = True  # Porta aparece no nível 1
+    enemies = create_enemies(level)  # Começa com inimigos no nível 1
+    porta = False  # Porta não aparece inicialmente
     porta_sprite = Sprite("templates/porta.png")
     porta_sprite.set_position((janela.width / 2) - 60, (janela.height / 5) * 1)  # Define a posição inicial da porta
     musica.load("Eric Skiff - A Night Of Dizzy Spells.ogg")
+    arena = Arena()  # Cria uma instância da classe Arena
     last_key = ""  # Variável para guardar a última tecla pressionada
-    
+
     while True:
         musica.set_volume(10)
         musica.play()
@@ -58,7 +59,7 @@ def Play():
             last_key = "D"
 
         # Verifica se não há inimigos
-        if len(enemies) == 0 and level > 1:
+        if len(enemies) == 0:
             porta = True
         else:
             porta = False
@@ -92,7 +93,7 @@ def Play():
             enemies = create_enemies(level)
 
         # Desenho na tela
-        arena.draw()
+        arena.draw()  # Use a instância arena para desenhar
         player.draw()
         for enemy in enemies:
             enemy.draw()
