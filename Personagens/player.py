@@ -18,9 +18,7 @@ class Player:
         # Define a velocidade base do jogador
         self.velocidade = 200
         
-        # 
-        # ADICIONAR VIDA
-        # 
+        self.vida = 5
 
     def move(self, direction, limites_W, limites_S, limites_A, limites_D, delta_time):
         # Calcula a distância de movimento com base na velocidade e delta time
@@ -47,6 +45,9 @@ class Player:
         self.current_sprite.set_position(x, y)
         self.current_sprite.set_total_duration(500)
         self.current_sprite.update()
+
+    def tomar_dano(self):
+        self.vida -= 1
 
     def draw(self):
         # Desenha o sprite atual na tela

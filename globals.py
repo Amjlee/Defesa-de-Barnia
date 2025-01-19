@@ -63,7 +63,7 @@ def quantidade_inimigos(level):
         return 0
     
     if level == 2:
-        return 1
+        return 4
     
     if level == 3:
         return 1
