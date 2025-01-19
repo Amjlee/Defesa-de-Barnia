@@ -3,11 +3,13 @@ from PPlay.sprite import Sprite
 from Personagens.player import Player
 from Personagens.fantasgua import Fantasgua
 from Personagens.pingoso import Pingoso
+from Personagens.arena import Arena
 
 import random
 
 def Play():
     player = Player((janela.width / 2) - 60, (janela.height / 5)+60)
+    arena = Arena()
     level = 0
     enemies = create_enemies(1)
     porta = False

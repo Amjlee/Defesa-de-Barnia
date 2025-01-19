@@ -16,8 +16,6 @@ velocidade = 0.2
 background = GameImage("templates/background.png")
 
 musica = Sound("Eric Skiff - A Night Of Dizzy Spells.ogg")
-
-arena = GameImage("templates/Arenas/arena_2.png")
 teclado = Keyboard()
 mouse = Mouse()
 estado = "Menu"
