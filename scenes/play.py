@@ -75,6 +75,7 @@ def Play():
         # Passar de Fase - Lógica para nível 1
         if level == 1 and player.colide_porta(porta_sprite):
             level += 1
+            arena.set_current_arena(level)
             player.current_sprite.x = (janela.width / 2) - (player.current_sprite.width / 2)
             player.current_sprite.y = (janela.height / 2) - (player.current_sprite.height / 2)
             print(f"Avançou para o nível {level}")
@@ -84,8 +85,8 @@ def Play():
 
         # Passar de Fase - A partir do nível 2
         if level > 1 and player.colide_porta(porta_sprite) and porta:
-            arena.set_current_arena(level)
             level += 1
+            arena.set_current_arena(level)
             player.current_sprite.x = (janela.width / 2) - (player.current_sprite.width / 2)
             player.current_sprite.y = (janela.height / 2) - (player.current_sprite.height / 2)
             print(f"Avançou para o nível {level}")
