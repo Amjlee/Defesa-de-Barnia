@@ -9,7 +9,7 @@ import random
 def Play():
     player = Player((janela.width / 2) - 60, (janela.height / 5)+60)
     level = 0
-    enemies = []
+    enemies = create_enemies(1)
     porta = False
     porta_sprite = Sprite("templates/porta.png")
     porta_sprite.set_position((janela.width / 2) - 60, (janela.height / 5) * 1)  # Define a posição inicial da porta

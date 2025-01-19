@@ -18,10 +18,6 @@ background = GameImage("templates/background.png")
 musica = Sound("Eric Skiff - A Night Of Dizzy Spells.ogg")
 
 arena = GameImage("templates/Arenas/arena_2.png")
-player_direita = Sprite("templates/Player/cavemia_esquerda.png", 4)
-player_esquerda = Sprite("templates/Player/cavemia_direita.png", 4)
-player_frente = Sprite("templates/Player/cavemia_frente.png", 4)
-player_tras = Sprite("templates/Player/cavemia_tras.png", 4)
 teclado = Keyboard()
 mouse = Mouse()
 estado = "Menu"
@@ -84,13 +80,26 @@ def quantidade_inimigos(level):
         return 4
 
 
-def create_enemies(level):
+def set_position_enemies():
+    x = random.randint(140, janela.width-175)
+    y = random.randint(120, janela.height-60)
+    return x, y
+
+
+def create_enemies(level: int):
     enemies = []
     qtdd_fantasgua = 0
     qtdd_pingoso = 0
 
     qtdd_fantasgua = random.randint(0, quantidade_inimigos(level))
-    qtdd_pingoso = qtdd_fantasgua - quantidade_inimigos(level)
+    qtdd_pingoso = quantidade_inimigos(level) - qtdd_fantasgua
 
     for i in range(qtdd_fantasgua):
-        enemies.append()
+        x, y = set_position_enemies()
+        enemies.append(fantasgua.Fantasgua(x, y))
+
+    for j in range(qtdd_pingoso):
+        x, y = set_position_enemies()
+        enemies.append(pingoso.Pingoso(x, y))
+    
+    return enemies
