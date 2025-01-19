@@ -17,6 +17,7 @@ class Pingoso:
         self.current_sprite.set_total_duration(500)
         # Define a velocidade base do Fantasgua
         self.velocidade = 60
+        self.hp = 2
 
     def draw(self):
         # Desenha o sprite atual na tela

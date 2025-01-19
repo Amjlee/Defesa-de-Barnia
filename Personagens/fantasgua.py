@@ -10,6 +10,7 @@ class Fantasgua:
         self.sprite.set_total_duration(500)
         # Define a velocidade base do Fantasgua
         self.velocidade = 70
+        self.hp = 1
 
     def follow_player(self, player, delta_time):
         # Calcula a distância de movimento com base na velocidade e delta time
