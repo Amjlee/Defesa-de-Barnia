@@ -6,8 +6,8 @@ class Arena:
         # Inicializa o sprite do Fantasgua com 4 frames de animação
         self.arenas = {
             1: GameImage("templates/Arenas/arena_2.png"),
-            2: GameImage("templates/Arenas/arena_2.png"),
-            3: GameImage("templates/Arenas/arena_2.png"),
+            2: GameImage("templates/Arenas/arena_1.png"),
+            3: GameImage("templates/Arenas/arena_3.png"),
         }
         self.current_arena = self.arenas[1]
         # Define a posição inicial do sprite
