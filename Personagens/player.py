@@ -16,7 +16,7 @@ class Player:
         # Define a duração total da animação do sprite
         self.current_sprite.set_total_duration(500)
         # Define a velocidade base do jogador
-        self.velocidade = 200
+        self.velocidade = 160
         
         self.vida = 5
 

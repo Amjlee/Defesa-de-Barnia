@@ -3,6 +3,7 @@ from PPlay.sprite import Sprite
 from Personagens.player import Player
 from Personagens.fantasgua import Fantasgua
 from Personagens.pingoso import Pingoso
+from Personagens.arena import Arena
 
 import random
 def create_enemies(level):
@@ -31,10 +32,12 @@ def Play():
     porta = True  # Porta aparece no nível 1
     porta_sprite = Sprite("templates/porta.png")
     porta_sprite.set_position((janela.width / 2) - 60, (janela.height / 5) * 1)  # Define a posição inicial da porta
-
+    musica.load("Eric Skiff - A Night Of Dizzy Spells.ogg")
     last_key = ""  # Variável para guardar a última tecla pressionada
     
     while True:
+        musica.set_volume(10)
+        musica.play()
         delta_time = janela.delta_time()
 
         # Movimento do player
@@ -98,5 +101,5 @@ def Play():
         if porta:
             porta_sprite.draw()
 
-
         janela.update()
+        musica.set_repeat(repeat=True)
