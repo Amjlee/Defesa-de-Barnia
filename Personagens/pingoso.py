@@ -65,8 +65,8 @@ class Pingoso:
         move_distance = self.velocidade * delta_time
         
         # Calcula a direção para o jogador
-        direction_x = player.current_sprite.x - self.current_sprite.x
-        direction_y = player.current_sprite.y - self.current_sprite.y
+        direction_x = (player.current_sprite.x + player.current_sprite.width / 2) - (self.current_sprite.x + self.current_sprite.width / 2)
+        direction_y = (player.current_sprite.y + player.current_sprite.height / 2) - (self.current_sprite.y + self.current_sprite.height / 2)
         
         # Normaliza a direção
         distance = (direction_x**2 + direction_y**2)**0.5
