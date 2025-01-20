@@ -1,4 +1,5 @@
 from PPlay.sprite import Sprite
+import sys
 
 class Player:
     def __init__(self, x, y):
@@ -18,7 +19,7 @@ class Player:
         # Define a velocidade base do jogador
         self.velocidade = 160
         
-        self.vida = 5  # Vida inicial do jogador
+        self.vida = 10  # Vida inicial do jogador
         self.invulneravel = False  # Flag para invulnerabilidade temporária
         self.invulnerabilidade_tempo = 1.0  # Duração da invulnerabilidade (em segundos)
         self.invulnerabilidade_timer = 0  # Timer para controlar o estado
@@ -55,11 +56,20 @@ class Player:
             self.vida -= 1
             self.invulneravel = True
             self.invulnerabilidade_timer = self.invulnerabilidade_tempo
+            if self.vida <= 0:
+                self.game_over()
+                
+    def game_over(self):
+        print("Game Over")
+        sys.exit()  # Encerra o programa
 
     def verificar_colisao_com_inimigo(self, inimigos, delta_time):
         for inimigo in inimigos:
             if self.current_sprite.collided(inimigo.current_sprite):
                 self.tomar_dano()
+                print("Colidiu")
+                print("Vida: ", self.vida)
+                break  # Adiciona um break para evitar múltiplas colisões no mesmo frame
 
         # Atualiza o estado de invulnerabilidade
         if self.invulneravel:
