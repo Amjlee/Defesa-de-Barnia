@@ -97,6 +97,7 @@ def Play():
         # Desenho na tela
         arena.draw()  # Use a instância arena para desenhar
         player.draw()
+        player.draw_vidas()
         for enemy in enemies:
             enemy.draw()
         

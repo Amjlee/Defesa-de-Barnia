@@ -1,4 +1,5 @@
 from PPlay.sprite import Sprite
+from PPlay.gameimage import GameImage
 
 class Player:
     def __init__(self, x, y):
@@ -19,6 +20,7 @@ class Player:
         self.velocidade = 160
         
         self.vida = 5  # Vida inicial do jogador
+        self.coracao = [] # coração para contagem de vidas do player
         self.invulneravel = False  # Flag para invulnerabilidade temporária
         self.invulnerabilidade_tempo = 1.0  # Duração da invulnerabilidade (em segundos)
         self.invulnerabilidade_timer = 0  # Timer para controlar o estado
@@ -67,12 +69,28 @@ class Player:
             if self.invulnerabilidade_timer <= 0:
                 self.invulneravel = False
 
-    def draw(self):
-        # Desenha o sprite atual na tela
-        self.current_sprite.draw()
-
     def colide_porta(self, porta: Sprite):
         area_porta = [porta.x - porta.width/2 - 10, porta.y - porta.height/2 - 10, \
                     porta.x+porta.width/2, porta.y + porta.height/2]
         return (area_porta[0] <= self.current_sprite.x <= area_porta[2] and \
             area_porta[1] <= self.current_sprite.y <= area_porta[3])
+
+    def draw(self):
+        # Desenha o sprite atual na tela
+        self.current_sprite.draw()
+    
+    def lista_coracao(self): # cria lista de corações que são os contadores de vida do player
+        x, y = 12, 20
+        for _ in range(self.vida):
+            coure = GameImage("templates/contador_de_vida.png")
+            coure.set_position(x, y)
+            self.coracao.append(coure)
+            x+=20
+
+    def draw_vidas(self): # Desenha o númro de corações correspondente ao número de vidas restantes
+        self.lista_coracao()
+        for i in self.coracao:
+            i.draw()
+
+        
+
