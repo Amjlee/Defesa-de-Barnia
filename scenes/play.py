@@ -68,6 +68,8 @@ def Play():
         for enemy in enemies:
             enemy.follow_player(player, delta_time)
 
+        player.verificar_colisao_com_inimigo(enemies, delta_time)
+
         # Condição para voltar ao menu
         if teclado.key_pressed("ESC"):
             return "Menu"  # Retorna ao menu

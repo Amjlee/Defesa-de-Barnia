@@ -1,5 +1,6 @@
 from PPlay.sprite import Sprite
 from PPlay.gameimage import GameImage
+from PPlay.collision import Collision
 
 class Player:
     def __init__(self, x, y):
@@ -60,7 +61,7 @@ class Player:
 
     def verificar_colisao_com_inimigo(self, inimigos, delta_time):
         for inimigo in inimigos:
-            if self.current_sprite.collided(inimigo.current_sprite):
+            if Collision.collided(self.current_sprite, inimigo.current_sprite):
                 self.tomar_dano()
 
         # Atualiza o estado de invulnerabilidade
@@ -81,6 +82,7 @@ class Player:
     
     def lista_coracao(self): # cria lista de corações que são os contadores de vida do player
         x, y = 12, 20
+        self.coracao = []
         for _ in range(self.vida):
             coure = GameImage("templates/contador_de_vida.png")
             coure.set_position(x, y)
