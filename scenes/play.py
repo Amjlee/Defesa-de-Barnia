@@ -71,6 +71,8 @@ def Play():
         # Verifica colisão com inimigos
         player.verificar_colisao_com_inimigo(enemies, delta_time)
 
+        player.verificar_colisao_com_inimigo(enemies, delta_time)
+
         # Condição para voltar ao menu
         if teclado.key_pressed("ESC"):
             return "Menu"  # Retorna ao menu
@@ -100,6 +102,7 @@ def Play():
         # Desenho na tela
         arena.draw()  # Use a instância arena para desenhar
         player.draw()
+        player.draw_vidas()
         for enemy in enemies:
             enemy.draw()
         
