@@ -2,6 +2,7 @@ from PPlay.sprite import Sprite
 import sys
 from PPlay.gameimage import GameImage
 from PPlay.collision import Collision
+from Personagens.tiro import Tiro  # Corrigir o caminho de importação
 
 class Player:
     def __init__(self, x, y):
@@ -26,6 +27,9 @@ class Player:
         self.invulneravel = False  # Flag para invulnerabilidade temporária
         self.invulnerabilidade_tempo = 3.0  # Duração da invulnerabilidade (em segundos)
         self.invulnerabilidade_timer = 0  # Timer para controlar o estado
+        self.tiros = []  # Lista para armazenar os tiros do jogador
+        self.tempo_recarga = 0.5  # Tempo de recarga entre os tiros (em segundos)
+        self.tempo_ultimo_tiro = 0  # Timer para controlar o tempo desde o último tiro
 
     def move(self, direction, limites_W, limites_S, limites_A, limites_D, delta_time):
         # Calcula a distância de movimento com base na velocidade e delta time
@@ -68,7 +72,7 @@ class Player:
 
     def verificar_colisao_com_inimigo(self, inimigos, delta_time):
         for inimigo in inimigos:
-            if Collision.collided(self.current_sprite, inimigo.current_sprite):
+            if inimigo.current_sprite is not None and Collision.collided(self.current_sprite, inimigo.current_sprite):
                 self.tomar_dano()
                 print("Colidiu")
                 print("Vida: ", self.vida)
@@ -81,10 +85,29 @@ class Player:
                 self.invulneravel = False
 
     def colide_porta(self, porta: Sprite):
-        area_porta = [porta.x - porta.width/2 - 10, porta.y - porta.height/2 - 10, \
-                    porta.x+porta.width/2, porta.y + porta.height/2]
-        return (area_porta[0] <= self.current_sprite.x <= area_porta[2] and \
-            area_porta[1] <= self.current_sprite.y <= area_porta[3])
+        return Collision.collided(self.current_sprite, porta)
+
+    def atirar(self, direction, delta_time):
+        # Verifica se o tempo de recarga já passou
+        if self.tempo_ultimo_tiro >= self.tempo_recarga:
+            print(f"Atirando na direção: {direction}")  # Adiciona print para depuração
+            x = self.current_sprite.x + self.current_sprite.width / 2
+            y = self.current_sprite.y + self.current_sprite.height / 2
+            tiro = Tiro(x, y, direction)
+            self.tiros.append(tiro)
+            print(f"Tiro adicionado na posição: ({x}, {y})")  # Adiciona print para depuração
+            self.tempo_ultimo_tiro = 0  # Reseta o timer de recarga
+
+    def update_tiros(self, delta_time, inimigos):
+        self.tempo_ultimo_tiro += delta_time  # Atualiza o timer de recarga
+        for tiro in self.tiros[:]:
+            tiro.move(delta_time)
+            if tiro.colide_com_inimigo(inimigos):
+                self.tiros.remove(tiro)
+
+    def draw_tiros(self):
+        for tiro in self.tiros:
+            tiro.draw()
 
     def draw(self):
         # Desenha o sprite atual na tela
@@ -103,6 +126,3 @@ class Player:
         self.lista_coracao()
         for i in self.coracao:
             i.draw()
-
-        
-

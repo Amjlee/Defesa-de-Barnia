@@ -2,21 +2,26 @@ from PPlay.sprite import Sprite
 
 class Fantasgua:
     def __init__(self, x, y):
-        # Inicializa o sprite do Fantasgua com 4 frames de animação
         self.current_sprite = Sprite("templates/Inimigos/fantasgua.png", 4)
-        # Define a posição inicial do current_sprite
         self.current_sprite.set_position(x, y)
-        # Define a duração total da animação do current_sprite
         self.current_sprite.set_total_duration(500)
-        # Define a velocidade base do Fantasgua
-        self.velocidade = 70
-        self.hp = 1
+        self.vida = 1  # Vida inicial do Fantasgua
 
+    def tomar_dano(self, dano):
+        self.vida -= dano
+        if self.vida <= 0:
+            self.morrer()
+
+    def morrer(self):
+        # Lógica para quando o Fantasgua morrer (pode ser removido do jogo, etc.)
+        print("Fantasgua morreu")
+        self.current_sprite = None  # Remove o sprite do Fantasgua
+        
     def follow_player(self, player, delta_time):
-        # Calcula a distância de movimento com base na velocidade e delta time
-        move_distance = self.velocidade * delta_time
+        if self.current_sprite is None:
+            return  # Não faz nada se o sprite for None
 
-        # Calcula a direção para o jogador
+        move_distance = 100 * delta_time
         direction_x = (player.current_sprite.x + player.current_sprite.width / 2) - (self.current_sprite.x + self.current_sprite.width / 2)
         direction_y = (player.current_sprite.y + player.current_sprite.height / 2) - (self.current_sprite.y + self.current_sprite.height / 2)
         
@@ -34,5 +39,7 @@ class Fantasgua:
         self.current_sprite.update()
 
     def draw(self):
-        # Desenha o current_sprite do Fantasgua na tela
-        self.current_sprite.draw()
+        if self.current_sprite is not None:
+            # Desenha o current_sprite do Fantasgua na tela
+            self.current_sprite.draw()
+

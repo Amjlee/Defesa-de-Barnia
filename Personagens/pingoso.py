@@ -2,7 +2,7 @@ from PPlay.sprite import Sprite
 
 class Pingoso:
     def __init__(self, x, y):
-        # Inicializa o sprite do Fantasgua com 4 frames de animação
+        # Inicializa os sprites do Pingoso para cada direção
         self.sprites = {
             "frente": Sprite("templates/Inimigos/Pingoso/pingoso_frente.png", 4),
             "esquerda": Sprite("templates/Inimigos/Pingoso/pingoso_esquerda.png", 4),
@@ -15,71 +15,61 @@ class Pingoso:
         self.current_sprite.set_position(x, y)
         # Define a duração total da animação do current_sprite
         self.current_sprite.set_total_duration(500)
-        # Define a velocidade base do Fantasgua
+        # Define a velocidade base do Pingoso
         self.velocidade = 60
-        self.hp = 2
+        self.hp = 2  # Vida inicial do Pingoso
 
-    def draw(self):
-        # Desenha o sprite atual na tela
-        self.current_sprite.draw()
+    def tomar_dano(self, dano):
+        self.hp -= dano
+        if self.hp <= 0:
+            self.morrer()
 
-    # def follow_player(self, player, delta_time):
-    #     # Calcula a distância de movimento com base na velocidade e delta time
-    #     move_distance = self.velocidade * delta_time
-        
-    #     # Calcula a direção para o jogador
-    #     direction_x = player.current_sprite.x - self.sprite.x
-    #     direction_y = player.current_sprite.y - self.sprite.y
-        
-    #     # Normaliza a direção
-    #     distance = (direction_x**2 + direction_y**2)**0.5
-    #     if distance != 0:
-    #         direction_x /= distance
-    #         direction_y /= distance
-        
-    #     # Move o Fantasgua na direção do jogador
-    #     self.sprite.x += direction_x * move_distance
-    #     self.sprite.y += direction_y * move_distance
-        
-    #     # Atualiza a animação do sprite
-    #     self.sprite.update()
-
-    def update_sprite_direction(self, direction_x, direction_y):
-        x, y = self.current_sprite.x, self.current_sprite.y
-        if abs(direction_x) > abs(direction_y):
-            if direction_x > 0:
-                self.current_sprite = self.sprites["direita"]
-            else:
-                self.current_sprite = self.sprites["esquerda"]
-        else:
-            if direction_y > 0:
-                self.current_sprite = self.sprites["frente"]
-            else:
-                self.current_sprite = self.sprites["tras"]
-        self.current_sprite.set_position(x, y)
-        self.current_sprite.set_total_duration(500)
-        self.current_sprite.update()
+    def morrer(self):
+        # Lógica para quando o Pingoso morrer (pode ser removido do jogo, etc.)
+        print("Pingoso morreu")
+        self.current_sprite = None  # Remove o sprite do Pingoso
 
     def follow_player(self, player, delta_time):
-        # Calcula a distância de movimento com base na velocidade e delta time
+        if self.current_sprite is None:
+            return  # Não faz nada se o sprite for None
+
         move_distance = self.velocidade * delta_time
-        
-        # Calcula a direção para o jogador
         direction_x = (player.current_sprite.x + player.current_sprite.width / 2) - (self.current_sprite.x + self.current_sprite.width / 2)
         direction_y = (player.current_sprite.y + player.current_sprite.height / 2) - (self.current_sprite.y + self.current_sprite.height / 2)
         
         # Normaliza a direção
         distance = (direction_x**2 + direction_y**2)**0.5
-        if distance !=0:
+        if distance != 0:
             direction_x /= distance
             direction_y /= distance
-        
-        # Move o Fantasgua na direção do jogador
+
+        # Move o Pingoso na direção do jogador
         self.current_sprite.x += direction_x * move_distance
         self.current_sprite.y += direction_y * move_distance
-        
+
+        # Atualiza o sprite atual com base na direção do movimento
+        if abs(direction_x) > abs(direction_y):
+            if direction_x > 0:
+                new_sprite = self.sprites["direita"]
+            else:
+                new_sprite = self.sprites["esquerda"]
+        else:
+            if direction_y > 0:
+                new_sprite = self.sprites["frente"]
+            else:
+                new_sprite = self.sprites["tras"]
+
+        # Reinicia a animação se o sprite mudou
+        if new_sprite != self.current_sprite:
+            new_sprite.set_position(self.current_sprite.x, self.current_sprite.y)
+            new_sprite.set_total_duration(500)
+            self.current_sprite = new_sprite
+
         # Atualiza a animação do current_sprite
-        # self.current_sprite.update()
-        
-        # Atualiza a direção do current_sprite
-        self.update_sprite_direction(direction_x, direction_y)
+        self.current_sprite.update()
+
+    def draw(self):
+        if self.current_sprite is not None:
+            # Desenha o current_sprite do Pingoso na tela
+            self.current_sprite.draw()
+

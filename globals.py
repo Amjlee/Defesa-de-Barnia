@@ -76,6 +76,8 @@ def quantidade_inimigos(level):
 
     if level in [8, 9, 10]:
         return 4
+    if level == 11:
+        return 0
 
 
 def set_position_enemies():

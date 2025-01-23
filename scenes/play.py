@@ -4,24 +4,25 @@ from Personagens.player import Player
 from Personagens.fantasgua import Fantasgua
 from Personagens.pingoso import Pingoso
 from Personagens.arena import Arena
+from Personagens.tiro import Tiro
 
 import random
+
 def create_enemies(level):
-    """Cria inimigos aleatoriamente com base no nível."""
     enemies = []
-    qtdd_fantasgua = random.randint(0, quantidade_inimigos(level))
-    qtdd_pingoso = quantidade_inimigos(level) - qtdd_fantasgua
+    num_enemies = quantidade_inimigos(level)  # Obtém o número de inimigos com base no nível
+    quantidade_pingoso = random.randint(0, num_enemies)
+    quantidade_fantasgua = num_enemies - quantidade_pingoso
 
-    print("Fantasgua: ", qtdd_fantasgua)
-    print("Pingoso: ", qtdd_pingoso)
+    for _ in range(quantidade_pingoso):
+        x = random.randint(0, janela.width)
+        y = janela.height // 2
+        enemies.append(Pingoso(x, y))
 
-    for _ in range(qtdd_fantasgua):
-        enemy = Fantasgua(random.randint(0, janela.width), janela.height/2)
-        enemies.append(enemy)
-
-    for _ in range(qtdd_pingoso):
-        enemy = Pingoso(random.randint(0, janela.width), janela.height/2)
-        enemies.append(enemy)
+    for _ in range(quantidade_fantasgua):
+        x = random.randint(0, janela.width)
+        y = janela.height // 2
+        enemies.append(Fantasgua(x, y))
 
     return enemies
 
@@ -58,6 +59,10 @@ def Play():
             player.move("D", limites_W, limites_S, limites_A, limites_D, delta_time)
             last_key = "D"
 
+        # Lança o tiro na direção da última tecla pressionada
+        if teclado.key_pressed("SPACE"):
+            player.atirar(last_key, delta_time)
+
         # Verifica se não há inimigos
         if len(enemies) == 0:
             porta = True
@@ -71,8 +76,6 @@ def Play():
         # Verifica colisão com inimigos
         player.verificar_colisao_com_inimigo(enemies, delta_time)
 
-        player.verificar_colisao_com_inimigo(enemies, delta_time)
-
         # Condição para voltar ao menu
         if teclado.key_pressed("ESC"):
             return "Menu"  # Retorna ao menu
@@ -80,7 +83,6 @@ def Play():
         # Passar de Fase - Lógica para nível 1
         if level == 1 and player.colide_porta(porta_sprite):
             level += 1
-            arena.set_current_arena(level)
             player.current_sprite.x = (janela.width / 2) - (player.current_sprite.width / 2)
             player.current_sprite.y = (janela.height / 2) - (player.current_sprite.height / 2)
             print(f"Avançou para o nível {level}")
@@ -100,15 +102,21 @@ def Play():
             enemies = create_enemies(level)
 
         # Desenho na tela
-        arena.draw()  # Use a instância arena para desenhar
+        arena.draw()
         player.draw()
-        player.draw_vidas()
-        for enemy in enemies:
-            enemy.draw()
+        for enemy in enemies[:]:
+            if enemy.current_sprite is None:
+                enemies.remove(enemy)
+            else:
+                enemy.draw()
         
-        # Renderiza a porta
+        # Atualiza e desenha os tiros
+        player.update_tiros(delta_time, enemies)
+        player.draw_tiros()
+        player.draw_vidas()
+            
+        # Renderiza a porta se porta == True
         if porta:
             porta_sprite.draw()
 
         janela.update()
-        musica.set_repeat(repeat=True)
