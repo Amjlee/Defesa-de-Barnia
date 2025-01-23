@@ -15,7 +15,8 @@ class Arena:
             8: GameImage("templates/Arenas/arena_3.png"),
             9: GameImage("templates/Arenas/arena_3.png"),
             10: GameImage("templates/Arenas/arena_3.png"),
-            11: GameImage("templates/Win_Lose.png"),
+            11: GameImage("templates/Lose.png"),
+            11: GameImage("templates/Win.png"),
         }
         self.current_arena = self.arenas[1]
 

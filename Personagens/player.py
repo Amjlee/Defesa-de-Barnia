@@ -3,6 +3,7 @@ import sys
 from PPlay.gameimage import GameImage
 from PPlay.collision import Collision
 from Personagens.tiro import Tiro  # Corrigir o caminho de importação
+import time
 
 class Player:
     def __init__(self, x, y):
@@ -21,15 +22,17 @@ class Player:
         self.current_sprite.set_total_duration(500)
         # Define a velocidade base do jogador
         self.velocidade = 160
-        
         self.vida = 10  # Vida inicial do jogador
         self.coracao = [] # coração para contagem de vidas do player
         self.invulneravel = False  # Flag para invulnerabilidade temporária
-        self.invulnerabilidade_tempo = 3.0  # Duração da invulnerabilidade (em segundos)
+        self.invulnerabilidade_tempo =10  # Duração da invulnerabilidade (em segundos)
         self.invulnerabilidade_timer = 0  # Timer para controlar o estado
         self.tiros = []  # Lista para armazenar os tiros do jogador
-        self.tempo_recarga = 0.5  # Tempo de recarga entre os tiros (em segundos)
+        self.tempo_recarga = 3  # Tempo de recarga entre os tiros (em segundos)
         self.tempo_ultimo_tiro = 0  # Timer para controlar o tempo desde o último tiro
+        self.lose_image = GameImage("templates/Lose.png")
+        self.win_image = GameImage("templates/Win.png")
+        self.level = 1  # Nível inicial do jogador
 
     def move(self, direction, limites_W, limites_S, limites_A, limites_D, delta_time):
         # Calcula a distância de movimento com base na velocidade e delta time
@@ -68,7 +71,6 @@ class Player:
                 
     def game_over(self):
         print("Game Over")
-        sys.exit()  # Encerra o programa
 
     def verificar_colisao_com_inimigo(self, inimigos, delta_time):
         for inimigo in inimigos:
@@ -83,6 +85,14 @@ class Player:
             self.invulnerabilidade_timer -= delta_time
             if self.invulnerabilidade_timer <= 0:
                 self.invulneravel = False
+
+        if self.level > 10:
+            self.win_game()
+    
+    def win_game(self):
+        print("You Win!")
+        # Lógica de exibição da tela de vitória movida para play.py
+        sys.exit()  # Encerra o programa
 
     def colide_porta(self, porta: Sprite):
         return Collision.collided(self.current_sprite, porta)

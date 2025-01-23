@@ -65,6 +65,8 @@ class Pingoso:
             new_sprite.set_total_duration(500)
             self.current_sprite = new_sprite
 
+
+        
         # Atualiza a animação do current_sprite
         self.current_sprite.update()
 

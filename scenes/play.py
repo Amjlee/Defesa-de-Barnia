@@ -36,7 +36,9 @@ def Play():
     musica.load("Eric Skiff - A Night Of Dizzy Spells.ogg")
     arena = Arena()  # Cria uma instância da classe Arena
     last_key = ""  # Variável para guardar a última tecla pressionada
-
+    win_image = GameImage("templates/Win.png")
+    lose_image = GameImage("templates/Lose.png")
+    
     while True:
         musica.set_volume(10)
         musica.play()
@@ -91,7 +93,7 @@ def Play():
             enemies = create_enemies(level)
 
         # Passar de Fase - A partir do nível 2
-        if level > 1 and player.colide_porta(porta_sprite) and porta:
+        if level > 1 and player.colide_porta(porta_sprite) and porta and level < 11:
             level += 1
             arena.set_current_arena(level)
             player.current_sprite.x = (janela.width / 2) - (player.current_sprite.width / 2)
@@ -100,6 +102,20 @@ def Play():
 
             # Gera inimigos para o próximo nível
             enemies = create_enemies(level)
+
+        # Verifica se o jogador venceu
+        if level > 10:
+            win_image.draw()
+            janela.update()
+            time.sleep(5)
+            return "Menu"  # Volta ao menu após a vitória
+
+        # Verifica se o jogador perdeu
+        if player.vida <= 0:
+            lose_image.draw()
+            janela.update()
+            time.sleep(5)
+            return "Menu"  # Volta ao menu após a derrota
 
         # Desenho na tela
         arena.draw()
