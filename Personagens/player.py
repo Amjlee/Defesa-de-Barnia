@@ -9,10 +9,10 @@ class Player:
     def __init__(self, x, y):
         # Inicializa os sprites do jogador para cada direção
         self.sprites = {
-            "frente": Sprite("templates/Player/cavemia_frente.png", 4),
-            "esquerda": Sprite("templates/Player/cavemia_esquerda.png", 4),
-            "tras": Sprite("templates/Player/cavemia_tras.png", 4),
-            "direita": Sprite("templates/Player/cavemia_direita.png", 4)
+            "frente": Sprite("templates/Player/frente.png", 1),
+            "esquerda": Sprite("templates/Player/esquerda.png", 1),
+            "tras": Sprite("templates/Player/costa.png", 1),
+            "direita": Sprite("templates/Player/direita.png", 1)
         }
         # Define o sprite atual como o sprite de frente
         self.current_sprite = self.sprites["frente"]
@@ -25,10 +25,10 @@ class Player:
         self.vida = 10  # Vida inicial do jogador
         self.coracao = [] # coração para contagem de vidas do player
         self.invulneravel = False  # Flag para invulnerabilidade temporária
-        self.invulnerabilidade_tempo =10  # Duração da invulnerabilidade (em segundos)
+        self.invulnerabilidade_tempo =3  # Duração da invulnerabilidade (em segundos)
         self.invulnerabilidade_timer = 0  # Timer para controlar o estado
         self.tiros = []  # Lista para armazenar os tiros do jogador
-        self.tempo_recarga = 3  # Tempo de recarga entre os tiros (em segundos)
+        self.tempo_recarga = 0.5  # Tempo de recarga entre os tiros (em segundos)
         self.tempo_ultimo_tiro = 0  # Timer para controlar o tempo desde o último tiro
         self.lose_image = GameImage("templates/Lose.png")
         self.win_image = GameImage("templates/Win.png")

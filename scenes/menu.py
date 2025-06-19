@@ -6,7 +6,7 @@ def Menu(estado):
     # Botões
     botao_jogar = GameImage("templates/botao_jogar.png")
     botao_jogar.set_position(janela.width / 2 - botao_jogar.width / 2, 
-                             janela.height / 2 - botao_jogar.height / 2)
+                             janela.height / 2 - botao_jogar.height / 2 + 100)
 
     while True:
         # Verifica clique no botão

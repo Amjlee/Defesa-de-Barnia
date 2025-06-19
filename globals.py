@@ -13,9 +13,9 @@ janela.set_title("Tombshifter")
 
 velocidade = 0.2
 
-background = GameImage("templates/background.png")
+background = GameImage("templates/defesa de barnia.jpg")
 
-musica = Sound("Eric Skiff - A Night Of Dizzy Spells.ogg")
+musica = Sound("AdhesiveWombat - Night Shade NO COPYRIGHT 8-bit Music [TubeRipper.cc].ogg")
 teclado = Keyboard()
 mouse = Mouse()
 estado = "Menu"
@@ -103,3 +103,28 @@ def create_enemies(level: int):
         enemies.append(pingoso.Pingoso(x, y))
     
     return enemies
+
+def get_spawn_position():
+    # Limites da área onde os inimigos podem surgir, baseados na sua função set_position_enemies
+    left_bound = 140
+    right_bound = janela.width - 175  # Resultado: 725
+    top_bound = 120
+    bottom_bound = janela.height - 60   # Resultado: 540
+
+    # Escolhe aleatoriamente um dos quatro lados para o inimigo surgir
+    side = random.randint(0, 3)
+
+    if side == 0:  # Borda superior
+        x = random.randint(left_bound, right_bound)
+        y = top_bound
+    elif side == 1:  # Borda inferior
+        x = random.randint(left_bound, right_bound)
+        y = bottom_bound
+    elif side == 2:  # Borda esquerda
+        x = left_bound
+        y = random.randint(top_bound, bottom_bound)
+    else:  # Borda direita
+        x = right_bound
+        y = random.randint(top_bound, bottom_bound)
+
+    return x, y

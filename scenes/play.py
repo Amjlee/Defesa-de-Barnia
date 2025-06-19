@@ -1,3 +1,5 @@
+# scenes/play.py - VERSÃO ATUALIZADA
+
 from globals import *
 from PPlay.sprite import Sprite
 from Personagens.player import Player
@@ -7,37 +9,36 @@ from Personagens.arena import Arena
 from Personagens.tiro import Tiro
 
 import random
+import time # Importando a biblioteca time
 
 def create_enemies(level):
     enemies = []
     num_enemies = quantidade_inimigos(level)  # Obtém o número de inimigos com base no nível
-    quantidade_pingoso = random.randint(0, num_enemies)
+    if num_enemies > 0:
+        quantidade_pingoso = random.randint(0, num_enemies)
+    else:
+        quantidade_pingoso = 0
     quantidade_fantasgua = num_enemies - quantidade_pingoso
 
     for _ in range(quantidade_pingoso):
-        x = random.randint(0, janela.width)
-        y = janela.height // 2
+        x, y = get_spawn_position()
         enemies.append(Pingoso(x, y))
 
     for _ in range(quantidade_fantasgua):
-        x = random.randint(0, janela.width)
-        y = janela.height // 2
+        x, y = get_spawn_position()
         enemies.append(Fantasgua(x, y))
 
     return enemies
 
 def Play():
-    player = Player((janela.width / 2) - 60, (janela.height / 2) + 60)  # Ajusta a posição inicial do player
+    player = Player((janela.width / 2) - 60, (janela.height / 2) + 60)
     level = 1
-    enemies = create_enemies(level)  # Começa com inimigos no nível 1
-    porta = False  # Porta não aparece inicialmente
-    porta_sprite = Sprite("templates/porta.png")
-    porta_sprite.set_position((janela.width / 2) - 60, (janela.height / 5) * 1)  # Define a posição inicial da porta
-    musica.load("Eric Skiff - A Night Of Dizzy Spells.ogg")
-    arena = Arena()  # Cria uma instância da classe Arena
-    last_key = ""  # Variável para guardar a última tecla pressionada
-    win_image = GameImage("templates/Win.png")
-    lose_image = GameImage("templates/Lose.png")
+    enemies = create_enemies(level)
+    musica.load("AdhesiveWombat - Night Shade NO COPYRIGHT 8-bit Music [TubeRipper.cc].ogg")
+    arena = Arena()
+    last_key = ""
+    # win_image = GameImage("templates/Win.png")
+    # lose_image = GameImage("templates/Lose.png")
     
     while True:
         musica.set_volume(10)
@@ -65,11 +66,22 @@ def Play():
         if teclado.key_pressed("SPACE"):
             player.atirar(last_key, delta_time)
 
-        # Verifica se não há inimigos
-        if len(enemies) == 0:
-            porta = True
-        else:
-            porta = False
+        # Verifica se não há inimigos para avançar de fase automaticamente
+        if len(enemies) == 0 and level <= 10:
+            level += 1
+            print(f"Avançou para o nível {level}")
+            
+            # Pequena pausa antes de iniciar a próxima fase
+            janela.update()
+            time.sleep(1)
+
+            if level <= 10:
+                arena.set_current_arena(level)
+                player.current_sprite.x = (janela.width / 2) - (player.current_sprite.width / 2)
+                player.current_sprite.y = (janela.height / 2) - (player.current_sprite.height / 2)
+                
+                # Gera inimigos para o próximo nível
+                enemies = create_enemies(level)
 
         # Movimento dos inimigos
         for enemy in enemies:
@@ -80,42 +92,21 @@ def Play():
 
         # Condição para voltar ao menu
         if teclado.key_pressed("ESC"):
-            return "Menu"  # Retorna ao menu
-
-        # Passar de Fase - Lógica para nível 1
-        if level == 1 and player.colide_porta(porta_sprite):
-            level += 1
-            player.current_sprite.x = (janela.width / 2) - (player.current_sprite.width / 2)
-            player.current_sprite.y = (janela.height / 2) - (player.current_sprite.height / 2)
-            print(f"Avançou para o nível {level}")
-
-            # Gera inimigos para o nível 2
-            enemies = create_enemies(level)
-
-        # Passar de Fase - A partir do nível 2
-        if level > 1 and player.colide_porta(porta_sprite) and porta and level < 11:
-            level += 1
-            arena.set_current_arena(level)
-            player.current_sprite.x = (janela.width / 2) - (player.current_sprite.width / 2)
-            player.current_sprite.y = (janela.height / 2) - (player.current_sprite.height / 2)
-            print(f"Avançou para o nível {level}")
-
-            # Gera inimigos para o próximo nível
-            enemies = create_enemies(level)
+            return "Menu"
 
         # Verifica se o jogador venceu
         if level > 10:
-            win_image.draw()
-            janela.update()
-            time.sleep(5)
-            return "Menu"  # Volta ao menu após a vitória
+            # win_image.draw()
+            # janela.update()
+            # time.sleep(5)
+            return "Menu"
 
         # Verifica se o jogador perdeu
         if player.vida <= 0:
-            lose_image.draw()
-            janela.update()
-            time.sleep(5)
-            return "Menu"  # Volta ao menu após a derrota
+            # lose_image.draw()
+            # janela.update()
+            # time.sleep(5)
+            return "Menu"
 
         # Desenho na tela
         arena.draw()
@@ -131,8 +122,4 @@ def Play():
         player.draw_tiros()
         player.draw_vidas()
             
-        # Renderiza a porta se porta == True
-        if porta:
-            porta_sprite.draw()
-
         janela.update()
