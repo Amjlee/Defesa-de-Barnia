@@ -4,9 +4,7 @@ class Pingoso:
     def __init__(self, x, y):
         # Inicializa os sprites do Pingoso para cada direção
         self.sprites = {
-            "frente": Sprite("templates/Inimigos/Pingoso/pingoso_frente.png", 4),
             "esquerda": Sprite("templates/Inimigos/Pingoso/asa_esquerda.png", 3),
-            "tras": Sprite("templates/Inimigos/Pingoso/pingoso_costa.png", 4),
             "direita": Sprite("templates/Inimigos/Pingoso/asa_direita.png", 3)
         }
         

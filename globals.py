@@ -9,7 +9,7 @@ from Personagens import fantasgua
 import random
 
 janela = Window(900, 600)
-janela.set_title("Tombshifter")
+janela.set_title("Defesa de Barnia")
 
 velocidade = 0.2
 
