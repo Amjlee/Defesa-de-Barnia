@@ -4,7 +4,7 @@ class Fantasgua:
     def __init__(self, x, y):
         self.current_sprite = Sprite("templates/Inimigos/fantasgua.png", 4)
         self.current_sprite.set_position(x, y)
-        self.current_sprite.set_total_duration(500)
+        self.current_sprite.set_total_duration(700)
         self.vida = 1  # Vida inicial do Fantasgua
 
     def tomar_dano(self, dano):

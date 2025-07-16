@@ -5,12 +5,12 @@ class Pingoso:
         # Inicializa os sprites do Pingoso para cada direção
         self.sprites = {
             "frente": Sprite("templates/Inimigos/Pingoso/pingoso_frente.png", 4),
-            "esquerda": Sprite("templates/Inimigos/Pingoso/pingoso_esquerda.png", 4),
+            "esquerda": Sprite("templates/Inimigos/Pingoso/asa_esquerda.png", 3),
             "tras": Sprite("templates/Inimigos/Pingoso/pingoso_costa.png", 4),
-            "direita": Sprite("templates/Inimigos/Pingoso/pingoso_direita.png", 4)
+            "direita": Sprite("templates/Inimigos/Pingoso/asa_direita.png", 3)
         }
         
-        self.current_sprite = self.sprites["frente"]
+        self.current_sprite = self.sprites["esquerda"]
         # Define a posição inicial do sprite
         self.current_sprite.set_position(x, y)
         # Define a duração total da animação do current_sprite
@@ -48,17 +48,11 @@ class Pingoso:
         self.current_sprite.y += direction_y * move_distance
 
         # Atualiza o sprite atual com base na direção do movimento
-        if abs(direction_x) > abs(direction_y):
-            if direction_x > 0:
-                new_sprite = self.sprites["direita"]
-            else:
-                new_sprite = self.sprites["esquerda"]
+        if direction_x > 0:
+            new_sprite = self.sprites["direita"]
         else:
-            if direction_y > 0:
-                new_sprite = self.sprites["frente"]
-            else:
-                new_sprite = self.sprites["tras"]
-
+            new_sprite = self.sprites["esquerda"]
+        
         # Reinicia a animação se o sprite mudou
         if new_sprite != self.current_sprite:
             new_sprite.set_position(self.current_sprite.x, self.current_sprite.y)
